@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hellorsys
+spec:
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: hellorsys
+        
+    spec:
+      containers:
+      - name: hellorsys-pod
+        image: gcr.io/wise-philosophy-221104/github.com/cshekhargit/helloworld
+        ports: 
+        - containerPort: 80
+        - containerPort: 443
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hellorsys-service
+spec:
+  selector:
+    app: hellorsys
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
